@@ -1,5 +1,8 @@
 """
-LTCOE Campus — Flask Backend
+LTCOE Campus — Fflask
+flask-cors
+flask-sqlalchemy
+gunicorn
 Run: python app.py
 Then open: http://localhost:5000
 """
@@ -307,5 +310,9 @@ def stats():
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    print("\n[LTCOE Campus] System ready at --> http://localhost:5000\n")
-    app.run(debug=True, port=5000)
+    
+    # Use environment variables for Port (required for Render/Heroku)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    print(f"\n[LTCOE Campus] Production system ready at --> http://0.0.0.0:{port}\n")
+    app.run(host='0.0.0.0', port=port)
