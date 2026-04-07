@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LTCOE | Smart Campus Management</title>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+:root{
+  --white:#ffffff;
+  --off-white:#f5f5f7;
+  --light-gray:#e8e8ed;
+  --mid-gray:#aeaeb2;
+  --dark-gray:#3a3a3c;
+  --black:#1d1d1f;
+  --blue:#0071e3;
+  --blue-light:#147ce5;
+  --blue-ultra-light:#e8f0fe;
+  --green:#34c759;
+  --red:#ff3b30;
+  --amber:#ff9500;
+  --purple:#af52de;
+  --teal:#5ac8fa;
+  --glass:rgba(255,255,255,0.72);
+  --glass-border:rgba(255,255,255,0.5);
+  --shadow-sm:0 2px 12px rgba(0,0,0,0.08);
+  --shadow-md:0 8px 32px rgba(0,0,0,0.12);
+  --shadow-lg:0 24px 64px rgba(0,0,0,0.16);
+  --shadow-xl:0 40px 80px rgba(0,0,0,0.2);
+  --sans:'Plus Jakarta Sans',sans-serif;
+  --display:'Sora',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-lg:24px;
+  --radius-xl:32px;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--off-white);color:var(--black);min-height:100vh;overflow-x:hidden}
+
+/* ═══════════════════════════════════════
+   LOGIN PAGE
+═══════════════════════════════════════ */
+#login-page{
+  display:flex;min-height:100vh;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#000000 0%,#1a1a2e 40%,#0f3460 100%);
+}
+
+.login-bg-mesh{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 80% at 20% 20%,rgba(0,113,227,0.3) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 80%,rgba(90,200,250,0.2) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 0%,rgba(175,82,222,0.2) 0%,transparent 60%);
+  pointer-events:none;
+}
+
+.login-orbs{position:absolute;inset:0;pointer-events:none}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(80px);animation:orbFloat 8s ease-in-out infinite;
+}
+.orb1{width:500px;height:500px;background:rgba(0,113,227,0.25);top:-100px;left:-100px;animation-delay:0s}
+.orb2{width:400px;height:400px;background:rgba(90,200,250,0.15);bottom:-50px;right:100px;animation-delay:3s}
+.orb3{width:300px;height:300px;background:rgba(175,82,222,0.2);top:40%;right:-50px;animation-delay:6s}
+
+@keyframes orbFloat{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(20px,-30px) scale(1.05)}
+  66%{transform:translate(-10px,20px) scale(0.95)}
+}
+
+.login-grid-overlay{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none;
+}
+
+.login-left{
+  flex:1;display:flex;flex-direction:column;justify-content:center;padding:80px;
+  position:relative;z-index:2;
+}
+
+.login-brand{margin-bottom:60px;animation:slideUp 0.8s ease both}
+.login-brand-logo{
+  display:inline-flex;align-items:center;gap:14px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;padding:12px 20px;backdrop-filter:blur(20px);
+  margin-bottom:40px;
+}
+.brand-icon{
+  width:44px;height:44px;background:linear-gradient(135deg,#0071e3,#5ac8fa);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;box-shadow:0 8px 24px rgba(0,113,227,0.4);
+}
+.brand-name{
+  font-family:var(--display);font-size:22px;font-weight:700;color:#fff;
+  letter-spacing:-0.5px;
+}
+.brand-tld{color:#5ac8fa}
+
+.login-headline{
+  font-family:var(--display);font-size:64px;font-weight:800;color:#fff;
+  line-height:1.05;letter-spacing:-2px;margin-bottom:24px;
+}
+.login-headline span{
+  background:linear-gradient(135deg,#5ac8fa,#0071e3,#af52de);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.login-sub{
+  font-size:18px;color:rgba(255,255,255,0.5);font-weight:400;
+  max-width:440px;line-height:1.6;margin-bottom:48px;
+}
+
+.login-features{display:flex;flex-direction:column;gap:16px;animation:slideUp 0.8s 0.2s ease both}
+.feat-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;padding:10px 16px;width:fit-content;
+  backdrop-filter:blur(10px);
+}
+.feat-dot{width:8px;height:8px;border-radius:50%}
+.feat-text{font-size:14px;color:rgba(255,255,255,0.7);font-weight:500}
+
+.login-right{
+  width:480px;display:flex;align-items:center;justify-content:center;
+  padding:40px;position:relative;z-index:2;
+}
+
+.login-card{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--radius-xl);
+  padding:48px;
+  backdrop-filter:blur(40px);
+  width:100%;
+  box-shadow:0 40px 80px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);
+  animation:slideUp 0.8s 0.1s ease both;
+}
+
+.login-card-title{
+  font-family:var(--display);font-size:28px;font-weight:700;color:#fff;
+  margin-bottom:8px;letter-spacing:-0.5px;
+}
+.login-card-sub{font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:36px;line-height:1.5}
+
+.login-tabs{
+  display:flex;background:rgba(255,255,255,0.06);border-radius:12px;
+  padding:4px;margin-bottom:32px;gap:4px;
+}
+.login-tab{
+  flex:1;padding:10px;border-radius:9px;border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  transition:all 0.2s;color:rgba(255,255,255,0.45);background:transparent;
+}
+.login-tab.active{background:rgba(255,255,255,0.12);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+
+.form-field{margin-bottom:16px}
+.form-field label{
+  display:block;font-size:12px;font-weight:600;
+  color:rgba(255,255,255,0.5);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;
+}
+.form-field input,.form-field select{
+  width:100%;padding:14px 16px;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;color:#fff;
+  font-family:var(--sans);font-size:14px;
+  outline:none;transition:all 0.2s;
+}
+.form-field input::placeholder{color:rgba(255,255,255,0.25)}
+.form-field input:focus,.form-field select:focus{
+  border-color:rgba(0,113,227,0.6);
+  background:rgba(0,113,227,0.08);
+  box-shadow:0 0 0 3px rgba(0,113,227,0.15);
+}
+.form-field select option{background:#1a1a2e;color:#fff}
+
+.login-btn{
+  width:100%;padding:15px;margin-top:8px;
+  background:linear-gradient(135deg,#0071e3,#0059b3);
+  border:none;border-radius:12px;
+  color:#fff;font-family:var(--sans);font-size:15px;font-weight:700;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 8px 24px rgba(0,113,227,0.4);letter-spacing:-0.2px;
+}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(0,113,227,0.5)}
+.login-btn:active{transform:translateY(0)}
+
+.login-divider{
+  display:flex;align-items:center;gap:12px;margin:20px 0;
+}
+.login-divider span{font-size:12px;color:rgba(255,255,255,0.25);white-space:nowrap}
+.login-divider::before,.login-divider::after{
+  content:'';flex:1;height:1px;background:rgba(255,255,255,0.1);
+}
+
+.demo-creds{
+  background:rgba(52,199,89,0.1);border:1px solid rgba(52,199,89,0.2);
+  border-radius:12px;padding:14px 16px;
+}
+.demo-creds-title{font-size:11px;font-weight:700;color:rgba(52,199,89,0.8);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.demo-row{display:flex;justify-content:space-between;margin-bottom:4px}
+.demo-row:last-child{margin-bottom:0}
+.demo-label{font-size:12px;color:rgba(255,255,255,0.4)}
+.demo-val{font-size:12px;color:rgba(255,255,255,0.7);font-family:var(--mono)}
+
+/* ═══════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════ */
+#app-shell{display:none;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{
+  height:52px;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;padding:0 20px;gap:0;
+}
+.tb-brand{
+  display:flex;align-items:center;gap:10px;margin-right:32px;
+  text-decoration:none;
+}
+.tb-icon{
+  width:30px;height:30px;background:linear-gradient(135deg,#0071e3,#5ac8fa);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.tb-name{
+  font-family:var(--display);font-size:17px;font-weight:700;color:var(--black);letter-spacing:-0.3px;
+}
+.tb-tld{color:var(--blue)}
+.tb-nav{display:flex;align-items:center;gap:2px;flex:1}
+.tb-nav-item{
+  padding:6px 12px;border-radius:8px;font-size:13px;font-weight:500;
+  color:var(--dark-gray);cursor:pointer;transition:all 0.15s;border:none;background:none;
+  font-family:var(--sans);
+}
+.tb-nav-item:hover{background:rgba(0,0,0,0.05);color:var(--black)}
+.tb-nav-item.active{background:var(--blue-ultra-light);color:var(--blue);font-weight:600}
+.tb-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.tb-date{font-size:12px;color:var(--mid-gray);font-family:var(--mono)}
+.tb-notification{
+  width:34px;height:34px;border-radius:50%;background:var(--off-white);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:16px;position:relative;transition:all 0.15s;
+}
+.tb-notification:hover{background:var(--light-gray)}
+.tb-notification .notif-dot{
+  position:absolute;top:6px;right:6px;width:8px;height:8px;
+  background:var(--red);border-radius:50%;border:2px solid #fff;
+}
+.tb-user{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  background:var(--off-white);border-radius:20px;padding:4px 12px 4px 4px;
+  transition:all 0.15s;border:none;font-family:var(--sans);
+}
+.tb-user:hover{background:var(--light-gray)}
+.tb-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#0071e3,#af52de);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;
+}
+.tb-uname{font-size:13px;font-weight:600;color:var(--black)}
+.tb-role{font-size:11px;color:var(--mid-gray)}
+.logout-btn{
+  padding:7px 14px;border-radius:8px;
+  background:rgba(255,59,48,0.08);border:1px solid rgba(255,59,48,0.15);
+  color:var(--red);font-size:13px;font-weight:600;cursor:pointer;
+  transition:all 0.15s;font-family:var(--sans);
+}
+.logout-btn:hover{background:var(--red);color:#fff}
+
+/* MAIN BODY */
+.app-body{display:flex;flex:1;min-height:0}
+
+/* SIDEBAR */
+.sidebar{
+  width:220px;background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(20px);
+  border-right:1px solid rgba(0,0,0,0.06);
+  padding:20px 12px;
+  display:flex;flex-direction:column;gap:4px;
+  position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;
+}
+
+.sb-section{font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.8px;text-transform:uppercase;padding:8px 8px 4px;margin-top:8px}
+.sb-section:first-child{margin-top:0}
+
+.sb-item{
+  display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;
+  cursor:pointer;transition:all 0.15s;color:var(--dark-gray);
+  font-size:13px;font-weight:500;border:none;background:none;font-family:var(--sans);
+  width:100%;text-align:left;
+}
+.sb-item:hover{background:rgba(0,0,0,0.04)}
+.sb-item.active{background:var(--blue-ultra-light);color:var(--blue);font-weight:600}
+.sb-item .sb-icon{
+  width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;background:rgba(0,0,0,0.04);flex-shrink:0;
+}
+.sb-item.active .sb-icon{background:rgba(0,113,227,0.12)}
+.sb-badge{
+  margin-left:auto;background:var(--red);color:#fff;
+  font-size:10px;font-weight:700;padding:2px 6px;border-radius:99px;
+  font-family:var(--mono);
+}
+.sb-badge-blue{background:var(--blue)}
+
+/* CONTENT AREA */
+.content-area{flex:1;padding:28px;overflow-y:auto;background:var(--off-white)}
+
+/* PANELS */
+.panel{display:none;animation:fadeUp 0.25s ease both}
+.panel.active{display:block}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* PAGE HEADER */
+.page-hd{margin-bottom:28px}
+.page-hd-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px}
+.page-hd-title{font-family:var(--display);font-size:32px;font-weight:700;color:var(--black);letter-spacing:-0.8px}
+.page-hd-sub{font-size:14px;color:var(--mid-gray)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{
+  background:#fff;border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,0.04);
+  position:relative;overflow:hidden;transition:all 0.2s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.stat-card-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
+.stat-icon-wrap{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  margin-bottom:12px;
+}
+.stat-label{font-size:12px;font-weight:600;color:var(--mid-gray);letter-spacing:0.3px;text-transform:uppercase;margin-bottom:4px}
+.stat-value{font-family:var(--display);font-size:36px;font-weight:700;color:var(--black);letter-spacing:-1px;line-height:1}
+.stat-meta{font-size:12px;color:var(--mid-gray);margin-top:6px}
+.stat-up{color:var(--green)}
+.stat-down{color:var(--red)}
+
+/* CARDS */
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,0.04);overflow:hidden;margin-bottom:20px}
+.card-head{
+  padding:18px 20px;border-bottom:1px solid rgba(0,0,0,0.05);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-title{font-size:15px;font-weight:700;color:var(--black);letter-spacing:-0.2px}
+.card-sub{font-size:12px;color:var(--mid-gray);margin-top:2px}
+.card-body{padding:20px}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px}
+
+/* TABLES */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{background:rgba(0,0,0,0.02)}
+th{padding:11px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--mid-gray);letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid rgba(0,0,0,0.06)}
+td{padding:13px 16px;border-bottom:1px solid rgba(0,0,0,0.04);font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(0,113,227,0.02)}
+.td-primary{font-weight:600;color:var(--black)}
+.td-muted{color:var(--mid-gray)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;border:none;letter-spacing:-0.1px}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,113,227,0.25)}
+.btn-primary:hover{background:#0059b3;box-shadow:0 4px 16px rgba(0,113,227,0.4);transform:translateY(-1px)}
+.btn-ghost{background:rgba(0,0,0,0.05);color:var(--dark-gray);border:1px solid rgba(0,0,0,0.08)}
+.btn-ghost:hover{background:rgba(0,0,0,0.08)}
+.btn-success{background:rgba(52,199,89,0.1);color:#1a7f37;border:1px solid rgba(52,199,89,0.25)}
+.btn-success:hover{background:var(--green);color:#fff}
+.btn-danger{background:rgba(255,59,48,0.08);color:var(--red);border:1px solid rgba(255,59,48,0.15)}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:8px}
+.btn-xs{padding:4px 10px;font-size:11px;border-radius:7px}
+
+/* CHIPS */
+.chip{display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:0.2px;font-family:var(--mono)}
+.chip-green{background:rgba(52,199,89,0.12);color:#1a7f37}
+.chip-red{background:rgba(255,59,48,0.1);color:var(--red)}
+.chip-amber{background:rgba(255,149,0,0.1);color:#c05000}
+.chip-blue{background:rgba(0,113,227,0.1);color:var(--blue)}
+.chip-purple{background:rgba(175,82,222,0.1);color:var(--purple)}
+
+/* FORMS */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+label{font-size:12px;font-weight:600;color:var(--dark-gray);letter-spacing:0.3px}
+input,select,textarea{
+  background:#fff;border:1.5px solid var(--light-gray);color:var(--black);
+  font-family:var(--sans);font-size:13px;padding:10px 12px;border-radius:10px;
+  outline:none;transition:all 0.15s;width:100%;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,0.1)}
+input::placeholder{color:var(--mid-gray)}
+select option{background:#fff}
+
+/* PROGRESS */
+.progress{background:var(--light-gray);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;border-radius:99px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)}
+.progress-green{background:linear-gradient(90deg,#34c759,#30d158)}
+.progress-red{background:linear-gradient(90deg,#ff3b30,#ff453a)}
+.progress-amber{background:linear-gradient(90deg,#ff9500,#ffb340)}
+.progress-blue{background:linear-gradient(90deg,#0071e3,#147ce5)}
+
+/* ATTENDANCE GRID */
+.attendance-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.attendance-card{
+  background:#fff;border-radius:var(--radius-sm);padding:14px 16px;
+  border:1.5px solid var(--light-gray);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.15s;box-shadow:var(--shadow-sm);
+}
+.attendance-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(0,113,227,0.1)}
+.attendance-card.marked-p{border-color:var(--green);background:rgba(52,199,89,0.03)}
+.attendance-card.marked-a{border-color:var(--red);background:rgba(255,59,48,0.03)}
+.attendance-name{font-weight:600;font-size:13px;color:var(--black)}
+.attendance-roll{font-size:11px;color:var(--mid-gray);font-family:var(--mono);margin-top:1px}
+.attendance-toggle{display:flex;gap:6px}
+.attendance-btn{
+  width:34px;height:34px;border-radius:9px;border:1.5px solid;
+  cursor:pointer;font-size:15px;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+}
+.attendance-btn.p-btn{border-color:rgba(52,199,89,0.3);color:var(--green);background:rgba(52,199,89,0.05)}
+.attendance-btn.p-btn.sel{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 4px 12px rgba(52,199,89,0.4)}
+.attendance-btn.a-btn{border-color:rgba(255,59,48,0.3);color:var(--red);background:rgba(255,59,48,0.05)}
+.attendance-btn.a-btn.sel{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 4px 12px rgba(255,59,48,0.4)}
+
+/* SEARCH */
+.search-wrap{position:relative}
+.search-wrap input{padding-left:34px;min-width:220px}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--mid-gray);font-size:14px;pointer-events:none}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);
+  z-index:500;display:none;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:#fff;border-radius:var(--radius-lg);
+  width:580px;max-height:85vh;overflow-y:auto;
+  box-shadow:var(--shadow-xl);animation:modalIn 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.92) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{
+  padding:22px 28px;border-bottom:1px solid rgba(0,0,0,0.06);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:#fff;z-index:2;border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+}
+.modal-title{font-family:var(--display);font-size:20px;font-weight:700;color:var(--black);letter-spacing:-0.4px}
+.modal-close{
+  width:28px;height:28px;border-radius:50%;background:var(--off-white);
+  border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;
+  color:var(--dark-gray);transition:all 0.15s;
+}
+.modal-close:hover{background:var(--light-gray)}
+.modal-body{padding:28px}
+.modal-foot{
+  padding:16px 28px;border-top:1px solid rgba(0,0,0,0.06);
+  display:flex;justify-content:flex-end;gap:10px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;right:24px;
+  background:#fff;border-radius:var(--radius);
+  padding:14px 18px;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-lg);z-index:999;min-width:300px;
+  border:1px solid rgba(0,0,0,0.06);
+  transform:translateY(80px);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-ico{font-size:22px}
+.toast-msg{font-weight:700;font-size:14px;color:var(--black)}
+.toast-sub{font-size:12px;color:var(--mid-gray)}
+.toast-bar{
+  position:absolute;bottom:0;left:0;height:3px;border-radius:0 0 var(--radius) var(--radius);
+  background:var(--blue);transition:none;
+}
+
+/* MINI BAR CHART */
+.mini-chart{display:flex;align-items:flex-end;gap:5px;height:60px}
+.mc-bar{flex:1;border-radius:4px 4px 0 0;min-height:4px;transition:height 0.6s ease}
+.mc-labels{display:flex;justify-content:space-between;margin-top:6px}
+.mc-label{font-size:10px;color:var(--mid-gray);font-family:var(--mono);text-align:center;flex:1}
+
+/* CAL DOTS */
+.cal-grid{display:flex;flex-wrap:wrap;gap:4px}
+.cal-dot{width:14px;height:14px;border-radius:4px;cursor:default;transition:transform 0.1s}
+.cal-dot:hover{transform:scale(1.3)}
+.cal-dot.p{background:var(--green)}
+.cal-dot.a{background:var(--red)}
+.cal-dot.n{background:var(--light-gray)}
+
+/* REPORT ROW */
+.report-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+.report-row:last-child{border-bottom:none}
+.report-name{min-width:140px;font-weight:600;font-size:13px}
+.report-bar{flex:1}
+.report-pct{font-family:var(--mono);font-size:12px;min-width:36px;text-align:right;font-weight:600}
+
+/* TAB BAR */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:20px}
+.tab{
+  padding:8px 16px;font-size:13px;font-weight:600;color:var(--mid-gray);
+  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all 0.15s;
+}
+.tab:hover{color:var(--black)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* ALERT BOX */
+.alert{
+  border-radius:var(--radius-sm);padding:14px 16px;
+  display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;
+}
+.alert-blue{background:rgba(0,113,227,0.06);border:1px solid rgba(0,113,227,0.15)}
+.alert-text{font-size:13px;line-height:1.5;color:var(--dark-gray)}
+
+/* EMPTY */
+.empty{text-align:center;padding:48px 20px;color:var(--mid-gray)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-title{font-size:15px;font-weight:600;color:var(--dark-gray);margin-bottom:4px}
+.empty-sub{font-size:13px}
+
+/* PROFILE HEADER */
+.profile-header{
+  background:linear-gradient(135deg,#0071e3 0%,#5ac8fa 100%);
+  border-radius:var(--radius);padding:28px;margin-bottom:20px;color:#fff;
+  display:flex;align-items:center;gap:20px;
+  box-shadow:0 8px 32px rgba(0,113,227,0.3);
+}
+.profile-avatar-lg{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:700;border:3px solid rgba(255,255,255,0.4);
+  flex-shrink:0;
+}
+.profile-name{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:-0.4px}
+.profile-meta{font-size:14px;opacity:0.75;margin-top:4px}
+
+/* QUICK ACTIONS */
+.quick-actions{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.action-card{
+  background:#fff;border-radius:var(--radius-sm);padding:16px 20px;
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  border:1.5px solid var(--light-gray);transition:all 0.15s;
+  flex:1;min-width:160px;box-shadow:var(--shadow-sm);
+}
+.action-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.action-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.action-text{font-weight:600;font-size:13px;color:var(--black)}
+.action-sub{font-size:11px;color:var(--mid-gray);margin-top:2px}
+
+/* DIVIDER */
+.divider{height:1px;background:rgba(0,0,0,0.06);margin:16px 0}
+
+/* SCROLL */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.25)}
+
+/* MISC */
+.fw{font-weight:600}
+.muted{color:var(--mid-gray)}
+.mono{font-family:var(--mono)}
+
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN PAGE ═══════════════ -->
+<div id="login-page">
+  <div class="login-bg-mesh"></div>
+  <div class="login-grid-overlay"></div>
+  <div class="login-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="login-brand-logo">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-name">LTCOE <span class="brand-tld">Campus</span></div>
+      </div>
+      <div class="login-headline">
+        Campus<br>reimagined<br><span>for tomorrow.</span>
+      </div>
+      <div class="login-sub">
+        Lokmanya Tilak College of Engineering's unified platform for admissions, attendance, and academic intelligence.
+      </div>
+    </div>
+    <div class="login-features">
+      <div class="feat-pill"><div class="feat-dot" style="background:#34c759"></div><span class="feat-text">Real-time attendance tracking</span></div>
+      <div class="feat-pill"><div class="feat-dot" style="background:#0071e3"></div><span class="feat-text">Smart admission management</span></div>
+      <div class="feat-pill"><div class="feat-dot" style="background:#af52de"></div><span class="feat-text">Instant reports & analytics</span></div>
+      <div class="feat-pill"><div class="feat-dot" style="background:#ff9500"></div><span class="feat-text">Defaulter alerts & notifications</span></div>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-card-title">Welcome back</div>
+      <div class="login-card-sub">Securely sign in to the LTCOE Campus portal to continue</div>
+
+      <div class="login-tabs">
+        <button class="login-tab active" onclick="setLoginRole('admin',this)">Administrator</button>
+        <button class="login-tab" onclick="setLoginRole('faculty',this)">Faculty</button>
+        <button class="login-tab" onclick="setLoginRole('student',this)">Student</button>
+      </div>
+
+      <div class="form-field">
+        <label>Email Address</label>
+        <input type="email" id="login-email" placeholder="you@ltcoe.edu.in" value="admin@ltcoe.edu.in">
+      </div>
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="••••••••" value="admin123">
+      </div>
+
+      <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In to LTCOE Campus &rarr;</button>
+
+      <div class="login-divider"><span>Demo Credentials</span></div>
+
+      <div class="demo-creds">
+        <div class="demo-creds-title">âœ¦ Quick Access</div>
+        <div class="demo-row"><span class="demo-label">Admin</span><span class="demo-val">admin@ltcoe.edu.in / admin123</span></div>
+        <div class="demo-row"><span class="demo-label">Faculty</span><span class="demo-val">faculty@ltcoe.edu.in / faculty123</span></div>
+        <div class="demo-row"><span class="demo-label">Student</span><span class="demo-val">student@ltcoe.edu.in / student123</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ APP SHELL ═══════════════ -->
+<div id="app-shell">
+  <!-- TOPBAR -->
+  <nav class="topbar">
+    <div class="tb-brand">
+      <div class="tb-icon">🎓</div>
+      <div class="tb-name">LTCOE <span class="tb-tld">Campus</span></div>
+    </div>
+    <div class="tb-nav">
+      <button class="tb-nav-item active" onclick="goPanel('dashboard',this)">Dashboard</button>
+      <button class="tb-nav-item" onclick="goPanel('admissions',this)">Admissions</button>
+      <button class="tb-nav-item" onclick="goPanel('students',this)">Students</button>
+      <button class="tb-nav-item" onclick="goPanel('attendance',this)">Attendance</button>
+      <button class="tb-nav-item" onclick="goPanel('reports',this)">Reports</button>
+    </div>
+    <div class="tb-right">
+      <span class="tb-date" id="topbar-date"></span>
+      <button class="tb-notification" onclick="goPanel('alerts',document.querySelector('.tb-nav-item'))">
+        🔔<span class="notif-dot" id="tb-alert-dot"></span>
+      </button>
+      <button class="tb-user" onclick="goPanel('profile',document.querySelector('.tb-nav-item'))">
+        <div class="tb-avatar" id="topbar-avatar">MU</div>
+        <div>
+          <div class="tb-uname" id="dashboard-name">Prof. M. Umale</div>
+          <div class="tb-role" id="topbar-role">Administrator</div>
+        </div>
+      </button>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="app-body">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-section">Overview</div>
+      <button class="sb-item active" onclick="goPanel('dashboard',this)"><span class="sb-icon">📊</span>Dashboard</button>
+
+      <div class="sb-section">Admissions</div>
+      <button class="sb-item" onclick="goPanel('admissions',this)"><span class="sb-icon">📋</span>Applications <span class="sb-badge" id="badge-adm">0</span></button>
+      <button class="sb-item" onclick="goPanel('students',this)"><span class="sb-icon">👥</span>Students</button>
+      <button class="sb-item" onclick="goPanel('addstudent',this)"><span class="sb-icon">➕</span>New Application</button>
+
+      <div class="sb-section">Attendance</div>
+      <button class="sb-item" onclick="goPanel('attendance',this)"><span class="sb-icon">✅</span>Mark Attendance</button>
+      <button class="sb-item" onclick="goPanel('records',this)"><span class="sb-icon">📊</span>Records</button>
+      <button class="sb-item" onclick="goPanel('reports',this)"><span class="sb-icon">📈</span>Analytics</button>
+
+      <div class="sb-section">System</div>
+      <button class="sb-item" onclick="goPanel('alerts',this)"><span class="sb-icon">🔔</span>Alerts <span class="sb-badge sb-badge-blue" id="badge-alerts">3</span></button>
+      <button class="sb-item" onclick="goPanel('profile',this)"><span class="sb-icon">👤</span>My Profile</button>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content-area">
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <div class="panel active" id="view-dashboard">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Good morning, Prof. Umale 👋</div>
+            <button class="btn btn-primary" onclick="goPanel('attendance',document.querySelector('.sb-item:nth-child(7)'))">+ Mark Today's Attendance</button>
+          </div>
+          <div class="page-hd-sub" id="dashboard-date-sub">Loading date...</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-accent" style="background:linear-gradient(90deg,#0071e3,#5ac8fa)"></div>
+            <div class="stat-icon-wrap" style="background:rgba(0,113,227,0.08)">👥</div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-meta">Enrolled this AY 2025-26</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-accent" style="background:linear-gradient(90deg,#34c759,#30d158)"></div>
+            <div class="stat-icon-wrap" style="background:rgba(52,199,89,0.08)">✅</div>
+            <div class="stat-label">Present Today</div>
+            <div class="stat-value" id="stat-present">0</div>
+            <div class="stat-meta stat-up" id="stat-rate">— %</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-accent" style="background:linear-gradient(90deg,#ff3b30,#ff453a)"></div>
+            <div class="stat-icon-wrap" style="background:rgba(255,59,48,0.08)">❌</div>
+            <div class="stat-label">Absent Today</div>
+            <div class="stat-value" id="s-absent">0</div>
+            <div class="stat-meta stat-down">Requires follow-up</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-accent" style="background:linear-gradient(90deg,#ff9500,#ffb340)"></div>
+            <div class="stat-icon-wrap" style="background:rgba(255,149,0,0.08)">⏳</div>
+            <div class="stat-label">Pending Admissions</div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-meta">Awaiting approval</div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <div class="action-card" onclick="goPanel('attendance',null)">
+            <div class="action-icon" style="background:rgba(52,199,89,0.1)">✅</div>
+            <div><div class="action-text">Mark Attendance</div><div class="action-sub">Today's session</div></div>
+          </div>
+          <div class="action-card" onclick="openModal('add-modal')">
+            <div class="action-icon" style="background:rgba(0,113,227,0.1)">📋</div>
+            <div><div class="action-text">New Application</div><div class="action-sub">Add student</div></div>
+          </div>
+          <div class="action-card" onclick="goPanel('reports',null)">
+            <div class="action-icon" style="background:rgba(175,82,222,0.1)">📈</div>
+            <div><div class="action-text">View Analytics</div><div class="action-sub">Reports & trends</div></div>
+          </div>
+          <div class="action-card" onclick="exportCSV()">
+            <div class="action-icon" style="background:rgba(255,149,0,0.1)">⬇</div>
+            <div><div class="action-text">Export CSV</div><div class="action-sub">Download report</div></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">7-Day Attendance Trend</div><div class="card-sub">Daily presence rate</div></div>
+            </div>
+            <div class="card-body">
+              <div class="mini-chart" id="trend-chart"></div>
+              <div class="mc-labels" id="trend-labels"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title">At-Risk Students</div>
+              <span class="chip chip-red" id="atrisk-badge">0 students</span>
+            </div>
+            <div class="card-body" id="atrisk-list">
+              <div class="empty"><div class="empty-icon">🎉</div><div class="empty-title">All Clear!</div><div class="empty-sub">All students above 75%</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Recent Applications</div><div class="card-sub">Latest admission requests</div></div>
+            <button class="btn btn-ghost btn-sm" onclick="goPanel('admissions',null)">View All ➔</button>
+          </div>
+          <div class="card-body" style="padding:0"><div class="table-wrap">
+            <table>
+              <thead><tr><th>App ID</th><th>Name</th><th>Branch</th><th>Applied</th><th>Status</th></tr></thead>
+              <tbody id="dashboard-recent"></tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ═══ ADMISSIONS ═══ -->
+      <!-- ═ ═ ═  ADMISSIONS ═ ═ ═  -->
+      <div class="panel" id="view-admissions">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Admissions</div>
+            <div style="display:flex;gap:10px">
+              <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Search applications..." oninput="filterAdm(this.value)"></div>
+              <button class="btn btn-primary" onclick="openModal('add-modal')">+ New Application</button>
+            </div>
+          </div>
+          <div class="page-hd-sub">Manage student admission applications for AY 2025-26</div>
+        </div>
+
+        <div class="tab-bar">
+          <div class="tab active" onclick="admTab('all',this)">All Applications</div>
+          <div class="tab" onclick="admTab('Approved',this)">Approved</div>
+          <div class="tab" onclick="admTab('Pending',this)">Pending</div>
+          <div class="tab" onclick="admTab('Rejected',this)">Rejected</div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding:0"><div class="table-wrap">
+            <table>
+              <thead><tr><th>App ID</th><th>Name</th><th>Email</th><th>Branch</th><th>Year</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="admission-table"></tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ═ ═ ═  STUDENTS ═ ═ ═  -->
+      <div class="panel" id="view-students">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Students</div>
+            <div style="display:flex;gap:10px">
+              <div class="search-wrap"><span class="search-icon">🔍</span><input type="text" placeholder="Search students..." oninput="filterStu(this.value)"></div>
+              <select onchange="filterByBranch(this.value)" style="width:160px">
+                <option value="">All Branches</option>
+                <option>CE</option><option>IT</option><option>ENTC</option><option>Mech</option><option>Civil</option>
+              </select>
+            </div>
+          </div>
+          <div class="page-hd-sub">All enrolled students — AY 2025-26</div>
+        </div>
+        <div class="card">
+          <div class="card-body" style="padding:0"><div class="table-wrap">
+            <table>
+              <thead><tr><th>Roll No</th><th>Name</th><th>Branch</th><th>Year</th><th>Email</th><th>Phone</th><th>Attendance</th><th>Actions</th></tr></thead>
+              <tbody id="student-table"></tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ═══ ADD STUDENT (PANEL) ═══ -->
+      <div class="panel" id="view-addstudent">
+        <div class="page-hd">
+          <div class="page-hd-title">New Application</div>
+          <div class="page-hd-sub">Fill the form below to register a new student application</div>
+        </div>
+        <div class="card" style="max-width:700px">
+          <div class="card-head"><div class="card-title">Student Information</div></div>
+          <div class="card-body">
+            <div class="form-grid" id="panel-form">
+              <div class="form-group"><label>First Name *</label><input type="text" id="profile-first" placeholder="e.g. Vedant"></div>
+              <div class="form-group"><label>Last Name *</label><input type="text" id="profile-last" placeholder="e.g. Pawar"></div>
+              <div class="form-group"><label>Email *</label><input type="email" id="profile-email" placeholder="student@ltcoe.edu.in"></div>
+              <div class="form-group"><label>Phone</label><input type="tel" id="profile-phone" placeholder="+91 98765 43210"></div>
+              <div class="form-group"><label>Branch *</label>
+                <select id="profile-branch"><option value="CE">Computer Engineering</option><option value="IT">Information Technology</option><option value="ENTC">Electronics & Telecomm.</option><option value="Mech">Mechanical Engineering</option><option value="Civil">Civil Engineering</option></select>
+              </div>
+              <div class="form-group"><label>Year *</label>
+                <select id="profile-year"><option value="FE">FE (1st Year)</option><option value="SE" selected>SE (2nd Year)</option><option value="TE">TE (3rd Year)</option><option value="BE">BE (4th Year)</option></select>
+              </div>
+              <div class="form-group"><label>Date of Birth</label><input type="date" id="profile-dob"></div>
+              <div class="form-group"><label>Gender</label><select id="profile-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+              <div class="form-group full"><label>Address</label><input type="text" id="profile-address" placeholder="City, State, PIN"></div>
+              <div class="form-group full"><label>Previous Institution</label><input type="text" id="profile-school" placeholder="School / Junior College name"></div>
+              <div class="form-group full"><label>12th Percentage / CET Score</label><input type="text" id="profile-score" placeholder="e.g. 87.40% or CET: 142"></div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+              <button class="btn btn-primary" onclick="submitPanel()">Submit Application</button>
+              <button class="btn btn-ghost" onclick="goPanel('admissions',null)">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ATTENDANCE ═══ -->
+      <div class="panel" id="view-attendance">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Mark Attendance</div>
+            <div class="attendance-controls" style="display:flex;gap:10px;align-items:center">
+              <select id="attendance-subject" style="width:200px">
+                <option>Theory of Computation</option>
+                <option>Database Systems</option>
+                <option>Web Technology</option>
+                <option>Computer Networks</option>
+                <option>Software Engineering</option>
+                <option>Operating Systems</option>
+              </select>
+              <select id="attendance-year" style="width:160px" onchange="buildAttGrid()">
+                <option value="SE">SE — 2nd Year</option>
+                <option value="TE">TE — 3rd Year</option>
+                <option value="BE">BE — 4th Year</option>
+                <option value="FE">FE — 1st Year</option>
+              </select>
+              <button class="btn btn-ghost btn-sm" onclick="markAll('P')">All Present</button>
+              <button class="btn btn-ghost btn-sm" onclick="markAll('A')">All Absent</button>
+              <button class="btn btn-primary" onclick="saveAtt()">Save Session</button>
+            </div>
+          </div>
+          <div class="page-hd-sub" id="attendance-date-sub"></div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:20px">
+          <div class="card" style="margin:0">
+            <div class="card-body" style="padding:16px 20px">
+              <div class="stat-label">Present</div>
+              <div style="font-family:var(--display);font-size:32px;font-weight:700;color:var(--green)" id="attendance-status-present">0</div>
+            </div>
+          </div>
+          <div class="card" style="margin:0">
+            <div class="card-body" style="padding:16px 20px">
+              <div class="stat-label">Absent</div>
+              <div style="font-family:var(--display);font-size:32px;font-weight:700;color:var(--red)" id="attendance-status-absent">0</div>
+            </div>
+          </div>
+          <div class="card" style="margin:0">
+            <div class="card-body" style="padding:16px 20px">
+              <div class="stat-label">Not Marked</div>
+              <div style="font-family:var(--display);font-size:32px;font-weight:700;color:var(--mid-gray)" id="attendance-u">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-body" style="padding:16px 20px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <span class="stat-label">Session Rate</span>
+              <span class="mono fw" id="attendance-rate-txt">0%</span>
+            </div>
+            <div class="progress" style="height:8px">
+              <div class="progress-fill progress-green" id="attendance-status-presentrog" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attendance-grid" id="attendance-grid"></div>
+      </div>
+
+      <!-- ═ ═ ═  RECORDS ═ ═ ═  -->
+      <div class="panel" id="view-records">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Attendance Records</div>
+            <div style="display:flex;gap:10px">
+              <select id="rec-stu" style="width:220px" onchange="renderRec()"><option value="">— Select Student —</option></select>
+              <select id="rec-sub" style="width:180px" onchange="renderRec()">
+                <option value="">All Subjects</option>
+                <option>Theory of Computation</option><option>Database Systems</option>
+                <option>Web Technology</option><option>Computer Networks</option>
+                <option>Software Engineering</option><option>Operating Systems</option>
+              </select>
+            </div>
+          </div>
+          <div class="page-hd-sub">View individual student attendance history</div>
+        </div>
+        <div id="rec-content"><div class="empty"><div class="empty-icon">📊</div><div class="empty-title">Select a Student</div><div class="empty-sub">Choose a student from the dropdown to view their records</div></div></div>
+      </div>
+
+      <!-- ═ ═ ═  REPORTS ═ ═ ═  -->
+      <div class="panel" id="view-reports">
+        <div class="page-hd">
+          <div class="page-hd-top">
+            <div class="page-hd-title">Analytics & Reports</div>
+            <button class="btn btn-primary" onclick="exportCSV()">⬇ Export CSV</button>
+          </div>
+          <div class="page-hd-sub">Class-wise attendance analytics and defaulter management</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Branch-wise Attendance</div></div>
+            <div class="card-body" id="branch-report"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Defaulters List</div><span class="chip chip-red" id="def-count">0</span></div>
+            <div class="card-body" style="padding:0"><div class="table-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Roll</th><th>Att.%</th></tr></thead>
+                <tbody id="def-table"></tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">Full Attendance Summary</div><div class="card-sub">All enrolled students</div></div>
+          </div>
+          <div class="card-body" style="padding:0"><div class="table-wrap">
+            <table>
+              <thead><tr><th>Roll No</th><th>Name</th><th>Branch</th><th>Year</th><th>Present</th><th>Total</th><th>Percentage</th><th>Status</th></tr></thead>
+              <tbody id="sum-table"></tbody>
+            </table>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ═══ ALERTS ═══ -->
+      <div class="panel" id="view-alerts">
+        <div class="page-hd">
+          <div class="page-hd-title">Alerts & Notifications</div>
+          <div class="page-hd-sub">Important updates requiring your attention</div>
+        </div>
+        <div id="alerts-list"></div>
+      </div>
+
+      <!-- ═══ PROFILE ═══ -->
+      <div class="panel" id="view-profile">
+        <div class="page-hd">
+          <div class="page-hd-title">My Profile</div>
+          <div class="page-hd-sub">Account information and preferences</div>
+        </div>
+        <div id="profile-content"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">New Student Application</div>
+      <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>First Name *</label><input type="text" id="f-first" placeholder="Vedant"></div>
+        <div class="form-group"><label>Last Name *</label><input type="text" id="f-last" placeholder="Pawar"></div>
+        <div class="form-group"><label>Email *</label><input type="email" id="f-email" placeholder="student@ltcoe.edu.in"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="f-phone" placeholder="+91 98765 43210"></div>
+        <div class="form-group"><label>Branch *</label>
+          <select id="f-branch"><option value="CE">Computer Engineering</option><option value="IT">Information Technology</option><option value="ENTC">Electronics & Telecomm.</option><option value="Mech">Mechanical Engineering</option><option value="Civil">Civil Engineering</option></select>
+        </div>
+        <div class="form-group"><label>Year *</label>
+          <select id="f-year"><option value="FE">FE (1st Year)</option><option value="SE" selected>SE (2nd Year)</option><option value="TE">TE (3rd Year)</option><option value="BE">BE (4th Year)</option></select>
+        </div>
+        <div class="form-group"><label>Date of Birth</label><input type="date" id="f-dob"></div>
+        <div class="form-group"><label>Gender</label><select id="f-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
+        <div class="form-group full"><label>Address</label><input type="text" id="f-address" placeholder="City, State, PIN"></div>
+        <div class="form-group full"><label>Previous Institution</label><input type="text" id="f-school" placeholder="School / Junior College"></div>
+        <div class="form-group full"><label>12th % / CET Score</label><input type="text" id="f-score" placeholder="e.g. 87.40%"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('add-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitModal()">Submit Application</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="student-detail-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="detail-title">Student Detail</div>
+      <button class="modal-close" onclick="closeModal('stu-detail-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal('stu-detail-modal')">Close</button></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-ico" id="toast-ico">✅</div>
+  <div><div class="toast-msg" id="toast-msg">Success</div><div class="toast-sub" id="toast-sub">Done</div></div>
+  <div class="toast-bar" id="toast-bar"></div>
+</div>
+
+<script>
+
+let currentUser = null;
+let loginRole = 'admin';
+
+async function api(endpoint, options={}) {
+  try {
+    const res = await fetch(`http://localhost:5000${endpoint}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options.headers || {})
+      }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error("API Error: ", err);
+    return null;
+  }
+}
+
+// Global active data states
+let students = [];
+// Filter states
+let admFilterStatus = 'all';
+let admSearchQuery = '';
+let stuSearchQuery = '';
+let stuBranchFilter = '';
+
+// ════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const fd = d => new Date(d).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+const today = () => new Date().toISOString().slice(0,10);
+const dayName = d => new Date(d).toLocaleDateString('en-IN',{weekday:'short'});
+
+function toast(msg, sub='', ico='✅'){
+  $('toast-ico').textContent = ico;
+  $('toast-msg').textContent = msg;
+  $('toast-sub').textContent = sub;
+  const t = $('toast');
+  t.classList.add('show');
+  const bar = $('toast-bar');
+  bar.style.transition = 'none'; bar.style.width = '100%';
+  requestAnimationFrame(() => {
+    bar.style.transition = 'width 3s linear'; bar.style.width = '0%';
+  });
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ════════════════════════════════════════
+// DATA LOADING
+// ════════════════════════════════════════
+
+async function loadStudents() {
+  const data = await api('/api/students');
+  if (data !== null) students = data;
+}
+
+async function loadAttendanceSummary() {
+  // Returns {1: {total: 10, present: 8, percentage: 80.0}, ...}
+  const data = await api('/api/attendance/summary');
+  return data || {};
+}
+
+async function updateDashboard(){
+  if(currentUser) {
+    if($('dashboard-name')) $('dashboard-name').textContent = currentUser.name;
+    if($('topbar-role')) $('topbar-role').textContent = currentUser.role;
+    if($('topbar-avatar')) $('topbar-avatar').textContent = currentUser.initials;
+  }
+  
+  // Dashboard stats
+  const stats = await api('/api/stats');
+  if(stats) {
+    $('stat-total').textContent = stats.total_students;
+    $('stat-pending').textContent = stats.pending_admissions;
+    $('stat-present').textContent = stats.present_today;
+    const rate = stats.total_students > 0 ? Math.round((stats.present_today / stats.total_students) * 100) : 0;
+    $('stat-rate').textContent = `${rate}% attendance rate today`;
+    $('stat-rate').className = rate < 75 ? 'stat-sub stat-red' : 'stat-sub stat-green';
+  }
+
+  // Load summary for the table
+  const summary = await loadAttendanceSummary();
+  
+  // Update at risk table
+  const atRisk = students.filter(s => s.status === 'Approved' && summary[s.id] && summary[s.id].percentage < 75);
+  
+  const riskHtml = atRisk.map(s => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,59,48,0.04);border-radius:12px;margin-bottom:8px;border:1px solid rgba(255,59,48,0.1)">
+      <div>
+        <div style="font-weight:700;font-size:14px;color:var(--black)">${s.first} ${s.last}</div>
+        <div style="font-size:11px;color:var(--mid-gray);font-family:var(--mono)">${s.roll} • ${s.branch}</div>
+      </div>
+      <div style="font-weight:700;color:var(--red);font-family:var(--mono)">${summary[s.id].percentage.toFixed(1)}%</div>
+    </div>
+  `).join('');
+  
+  $('atrisk-list').innerHTML = atRisk.length ? riskHtml : `
+    <div style="text-align:center;padding:40px 20px;color:var(--mid-gray)">
+      <div style="font-size:32px;margin-bottom:12px">🎉</div>
+      <div style="font-size:14px;font-weight:600">All Good!</div>
+      <div style="font-size:13px;margin-top:4px">No students are currently below 75%.</div>
+    </div>
+  `;
+  if($('atrisk-badge')) {
+    $('atrisk-badge').textContent = `${atRisk.length} students`;
+    $('atrisk-badge').className = atRisk.length > 0 ? 'chip chip-red' : 'chip chip-green';
+  }
+
+  // Update Recent Applications
+  const recent = students.slice().sort((a,b) => new Date(b.applied) - new Date(a.applied)).slice(0,5);
+  $('dashboard-recent').innerHTML = recent.map(s => `
+    <tr>
+      <td class="mono">#${s.id.toString().padStart(4,'0')}</td>
+      <td class="fw">${s.first} ${s.last}</td>
+      <td><span class="chip chip-blue">${s.branch}</span></td>
+      <td class="mono">${s.applied}</td>
+      <td><span class="chip ${s.status==='Approved'?'chip-green':s.status==='Rejected'?'chip-red':'chip-amber'}">${s.status}</span></td>
+    </tr>
+  `).join('');
+
+  // 7-Day Attendance Trend
+  const attData = await api('/api/attendance'); // { "date": { "sid": "P", ... } }
+  if(attData) {
+    const dates = Object.keys(attData).sort().slice(-7);
+    const trendHtml = dates.map(d => {
+      const records = Object.values(attData[d]);
+      const present = records.filter(v => v === 'P').length;
+      const total = records.length;
+      const pct = total > 0 ? (present / total) * 100 : 0;
+      return `<div class="mc-bar" style="height:${pct}%; background:${pct>=75?'var(--blue)':'var(--red)'}" title="${d}: ${pct.toFixed(0)}%"></div>`;
+    }).join('');
+    
+    const labelHtml = dates.map(d => `<div class="mc-label">${d.slice(5)}</div>`).join('');
+    
+    if($('trend-chart')) $('trend-chart').innerHTML = trendHtml;
+    if($('trend-labels')) $('trend-labels').innerHTML = labelHtml;
+  }
+}
+
+// ════════════════════════════════════════
+// ADMINISTRATIVE ACTIONS
+// ════════════════════════════════════════
+
+async function updateStatus(sid, stat){
+  const isFac = ['Administrator','admin','Faculty','faculty'].includes(loginRole);
+  if(!isFac) return toast('Error','Insufficient permissions','⚠️');
+
+  const res = await api(`/api/students/${sid}/status`, {
+    method: 'POST',
+    body: JSON.stringify({ status: stat, role: loginRole })
+  });
+  if(res && res.ok) {
+    toast('Status Updated', `Student is now ${stat}`);
+    await loadStudents();
+    renderAdmissions();
+    updateBadges();
+  } else {
+    toast('Error', res.error || 'Unauthorized', '⚠️');
+  }
+}
+
+async function deleteStudent(sid){
+  const isAdm = ['Administrator','admin'].includes(loginRole);
+  if(!isAdm) return toast('Error','Strictly for Administrators','⚠️');
+
+  if(!confirm('Are you sure you want to delete this student permanently?')) return;
+  const res = await api(`/api/students/${sid}?role=${loginRole}`, { method:'DELETE' });
+  if(res && res.ok){
+    toast('Student Deleted', 'Record removed from system');
+    await loadStudents();
+    renderStudents();
+    updateBadges();
+  } else {
+    toast('Error', res.error || 'Unauthorized', '⚠️');
+  }
+}
+
+// ════════════════════════════════════════
+// ADMISSIONS logic
+// ════════════════════════════════════════
+
+function filterAdm(val) {
+  admSearchQuery = val.toLowerCase();
+  renderAdmissions();
+}
+
+function admTab(status, el) {
+  admFilterStatus = status;
+  document.querySelectorAll('#view-admissions .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderAdmissions();
+}
+
+async function renderAdmissions(){
+  const isAdm = ['Administrator','admin','Faculty','faculty'].includes(loginRole);
+  const list = students.filter(s => {
+    const matchStatus = admFilterStatus === 'all' || s.status === admFilterStatus;
+    const matchSearch = (s.first + ' ' + s.last).toLowerCase().includes(admSearchQuery) || s.email.toLowerCase().includes(admSearchQuery);
+    return matchStatus && matchSearch;
+  });
+
+  const pendCount = students.filter(s => s.status === 'Pending').length;
+  if($('badge-adm')) $('badge-adm').textContent = pendCount;
+  
+  if(!list.length){
+    $('admission-table').innerHTML = `<tr><td colspan="8"><div class="empty-state" style="padding:40px"><div class="empty-icon">📂</div><div class="empty-title">No applications found</div></div></td></tr>`;
+    return;
+  }
+  
+  $('admission-table').innerHTML = list.map(s=>`
+    <tr>
+      <td class="mono">#${s.id.toString().padStart(4,'0')}</td>
+      <td>
+        <div style="font-weight:600">${s.first} ${s.last}</div>
+        <div style="font-size:11px;color:var(--mid-gray)">Applied: ${s.applied}</div>
+      </td>
+      <td style="font-size:13px">${s.email}</td>
+      <td><span class="badge" style="background:var(--blue-ultra-light);color:var(--blue)">${s.branch}</span></td>
+      <td>${s.year}</td>
+      <td><span class="mono" style="font-weight:600;color:var(--blue)">${s.score}</span></td>
+      <td><span class="chip ${s.status==='Approved'?'chip-green':s.status==='Rejected'?'chip-red':'chip-orange'}">${s.status}</span></td>
+      <td>
+        ${isAdm ? `
+          <div style="display:flex;gap:6px">
+            ${s.status === 'Pending' ? `
+              <button class="btn btn-primary btn-sm" onclick="updateStatus(${s.id},'Approved')">Approve</button>
+              <button class="btn btn-outline btn-sm" style="color:var(--red)" onclick="updateStatus(${s.id},'Rejected')">Reject</button>
+            ` : `
+              <button class="btn btn-ghost btn-sm" onclick="updateStatus(${s.id},'Pending')">Reset</button>
+            `}
+          </div>
+        ` : `<div style="font-size:12px;color:var(--mid-gray)">No Control</div>`}
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Consolidated Administrative Logic.
+
+
+// ════════════════════════════════════════
+// STUDENTS logic
+// ════════════════════════════════════════
+
+function filterStu(val) {
+  stuSearchQuery = val.toLowerCase();
+  renderStudents();
+}
+
+function filterByBranch(branch) {
+  stuBranchFilter = branch;
+  renderStudents();
+}
+
+async function renderStudents(){
+  const isAdm = ['Administrator','admin'].includes(loginRole);
+  const summary = await loadAttendanceSummary();
+  const list = students.filter(s => {
+    const matchStatus = s.status === 'Approved';
+    const matchBranch = !stuBranchFilter || s.branch === stuBranchFilter;
+    const matchSearch = (s.first + ' ' + s.last).toLowerCase().includes(stuSearchQuery) || s.roll.toLowerCase().includes(stuSearchQuery);
+    return matchStatus && matchBranch && matchSearch;
+  });
+  
+  if(!list.length){
+    $('student-table').innerHTML = `<tr><td colspan="8"><div class="empty-state" style="padding:40px"><div class="empty-icon">👥</div><div class="empty-title">No students found</div></div></td></tr>`;
+    return;
+  }
+  
+  $('student-table').innerHTML = list.map(s => {
+    let pc = summary[s.id] ? summary[s.id].percentage : null;
+    let pcStr = pc !== null ? pc.toFixed(1) + '%' : 'N/A';
+    
+    return `<tr>
+      <td class="mono">${s.roll}</td>
+      <td>
+        <div style="font-weight:600">${s.first} ${s.last}</div>
+        <div style="font-size:11px;color:var(--mid-gray)">${s.email}</div>
+      </td>
+      <td><span class="badge" style="background:var(--blue-ultra-light);color:var(--blue)">${s.branch}</span></td>
+      <td>${s.year}</td>
+      <td style="font-size:13px">${s.email}</td>
+      <td style="font-size:13px">${s.phone}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="mono" style="font-weight:600;min-width:45px;color:${pc!==null && pc<75?'var(--red)':'inherit'}">${pcStr}</div>
+          <div class="progress" style="width:60px;height:6px">
+            <div class="progress-fill ${pc>=75?'progress-green':'progress-red'}" style="width:${pc||0}%"></div>
+          </div>
+        </div>
+      </td>
+      <td>
+        ${isAdm ? `<button class="btn btn-outline btn-sm" style="color:var(--red)" onclick="deleteStudent(${s.id})">Delete</button>` : `<div style="font-size:11px;color:var(--mid-gray)">ReadOnly</div>`}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+// ATTENDANCE
+// ════════════════════════════════════════
+// Consolidated Attendance Preparation.
+
+
+function selectSubject(subj) {
+  selectedSubject = subj;
+  document.querySelectorAll('.subj-btn').forEach(b => {
+    if(b.textContent === subj) {
+      b.classList.remove('btn-outline');
+      b.classList.add('btn-primary');
+    } else {
+      b.classList.add('btn-outline');
+      b.classList.remove('btn-primary');
+    }
+  });
+}
+
+// Attendance logic consolidated below.
+
+
+// ════════════════════════════════════════
+// NEW APP FORM
+// ════════════════════════════════════════
+async function submitApp(){
+  const first=$('f-first').value, last=$('f-last').value, email=$('f-email').value;
+  if(!first||!last||!email){ toast('Missing Fields','Please fill required fields','⚠️'); return; }
+  
+  const payload = {
+    first, last, email, phone: $('f-phone').value,
+    branch: $('f-branch').value, year: $('f-year').value,
+    gender: $('f-gender').value, dob: $('f-dob').value,
+    address: $('f-addr').value, school: $('f-school').value,
+    score: $('f-score').value
+  };
+
+  await api('/api/students', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+  
+  toast('Application Submitted','We will review it shortly','🎉');
+  ['f-first','f-last','f-email','f-phone','f-dob','f-addr','f-school','f-score'].forEach(i=>$(i).value='');
+  await loadStudents();
+  updateBadges();
+}
+
+// ════════════════════════════════════════
+// ATTENDANCE logic
+// ════════════════════════════════════════
+
+function prepAttendance() {
+  const d = new Date();
+  $('attendance-date-sub').textContent = d.toDateString();
+  
+  // Hide control buttons for students
+  const isFac = ['Administrator','admin','Faculty','faculty'].includes(loginRole);
+  document.querySelectorAll('.attendance-controls button').forEach(b => b.style.display = isFac ? 'flex' : 'none');
+  
+  buildAttGrid();
+}
+
+async function buildAttGrid() {
+  const isFac = ['Administrator','admin','Faculty','faculty'].includes(loginRole);
+  const year = $('attendance-year').value;
+  let list = students.filter(s => s.status === 'Approved' && s.year === year);
+  
+  // RBAC: Students only see themselves
+  if(loginRole.toLowerCase() === 'student' && currentUser) {
+    list = list.filter(s => s.email === currentUser.email);
+  }
+  
+  curAtt = {}; // Reset local session
+  
+  if(!list.length){
+    $('attendance-grid').innerHTML = `<div class="empty-state" style="grid-column:1/-1;padding:40px"><div class="empty-icon">📅</div><div class="empty-title">No records for your filter</div></div>`;
+    updateAttStats();
+    return;
+  }
+  
+  $('attendance-grid').innerHTML = list.map(s => `
+    <div class="att-card" id="att-row-${s.id}" style="border:1.5px solid var(--light-gray); padding:16px; border-radius:12px; background:#fff; box-shadow:var(--shadow-sm); transition:all 0.2s">
+      <div style="font-weight:700; font-size:15px; margin-bottom:2px; color:var(--black)">${s.first} ${s.last}</div>
+      <div style="font-size:12px; color:var(--mid-gray); font-family:var(--mono); margin-bottom:16px">${s.roll} • ${s.branch}</div>
+      ${isFac ? `
+        <div style="display:flex; gap:8px">
+          <button class="btn btn-ghost btn-sm att-btn-p" onclick="markAtt(${s.id},'P')" style="flex:1">Present</button>
+          <button class="btn btn-ghost btn-sm att-btn-a" onclick="markAtt(${s.id},'A')" style="flex:1">Absent</button>
+        </div>
+      ` : `
+        <div class="chip chip-blue" style="width:100%; justify-content:center">View Only</div>
+      `}
+    </div>
+  `).join('');
+  
+  updateAttStats();
+}
+
+function markAtt(id, status){
+  curAtt[id] = status;
+  const row = $(`att-row-${id}`);
+  if(!row) return;
+
+  const btnP = row.querySelector('.att-btn-p');
+  const btnA = row.querySelector('.att-btn-a');
+
+  if(status === 'P') {
+    btnP.className = 'btn btn-primary btn-sm att-btn-p';
+    btnA.className = 'btn btn-ghost btn-sm att-btn-a';
+    row.style.borderColor = 'var(--green)';
+    row.style.background = 'rgba(52,199,89,0.02)';
+  } else {
+    btnP.className = 'btn btn-ghost btn-sm att-btn-p';
+    btnA.className = 'btn btn-danger btn-sm att-btn-a';
+    row.style.borderColor = 'var(--red)';
+    row.style.background = 'rgba(255,59,48,0.02)';
+  }
+  updateAttStats();
+}
+
+function markAll(status){
+  const year = $('attendance-year').value;
+  // Only affect currently filtered/visible students
+  students.filter(s => s.status === 'Approved' && s.year === year).forEach(s => markAtt(s.id, status));
+}
+
+function updateAttStats(){
+  const marked = Object.keys(curAtt).length;
+  const p = Object.values(curAtt).filter(v => v === 'P').length;
+  const a = Object.values(curAtt).filter(v => v === 'A').length;
+  
+  const year = $('attendance-year').value;
+  const total = students.filter(s => s.status === 'Approved' && s.year === year).length;
+  const u = total - marked;
+
+  if($('attendance-status-present')) $('attendance-status-present').textContent = p;
+  if($('attendance-status-absent')) $('attendance-status-absent').textContent = a;
+  if($('attendance-u')) $('attendance-u').textContent = u;
+
+  const rate = total > 0 ? Math.round((p / total) * 100) : 0;
+  if($('attendance-rate-txt')) $('attendance-rate-txt').textContent = `${rate}%`;
+  if($('attendance-status-presentrog')) $('attendance-status-presentrog').style.width = `${rate}%`;
+}
+
+async function saveAtt() {
+  const isFac = ['Administrator','admin','Faculty','faculty'].includes(loginRole);
+  if(!isFac) return toast('Error','Insufficient permissions','⚠️');
+
+  const sub = $('attendance-subject').value;
+  const records = curAtt;
+  
+  if(Object.keys(records).length === 0) return toast('Error','No attendance marked','⚠️');
+  
+  const res = await api('/api/attendance', {
+    method: 'POST',
+    body: JSON.stringify({ subject: sub, records, role: loginRole })
+  });
+  
+  if(res && res.ok) {
+    toast('Attendance Saved','Records updated in database','✅');
+    updateBadges();
+  }
+}
+
+// ════════════════════════════════════════
+// RECORDS / HISTORY
+// ════════════════════════════════════════
+
+async function renderRec() {
+  const sid = $('rec-stu').value;
+  const sub = $('rec-sub').value;
+  
+  // Fill student dropdown if empty
+  if($('rec-stu').options.length <= 1) {
+    $('rec-stu').innerHTML = '<option value="">— Select Student —</option>' + 
+      students.filter(s=>s.status==='Approved').map(s=>`<option value="${s.id}">${s.roll} - ${s.first} ${s.last}</option>`).join('');
+  }
+
+  if(!sid) return;
+  
+  const history = await api(`/api/students/${sid}/history`);
+  if(!history) return;
+  
+  const filtered = !sub ? history : history.filter(h => h.subject === sub);
+  
+  if(!filtered.length) {
+    $('rec-content').innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">No records found</div></div>`;
+    return;
+  }
+  
+  $('rec-content').innerHTML = `
+    <div class="card" style="padding:0">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Subject</th><th>Status</th></tr></thead>
+          <tbody>
+            ${filtered.map(h => `
+              <tr>
+                <td class="mono">${h.date}</td>
+                <td>${h.subject}</td>
+                <td><span class="chip ${h.status==='P'?'chip-green':'chip-red'}">${h.status==='P'?'Present':'Absent'}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+function updateBadges(){
+  const p = students.filter(s=>s.status==='Pending').length;
+  if($('badge-adm')) {
+    $('badge-adm').textContent = p;
+    $('badge-adm').style.display = p>0?'flex':'none';
+  }
+}
+
+// ════════════════════════════════════════
+// REPORTS & ANALYTICS
+// ════════════════════════════════════════
+
+async function renderReports() {
+  const branchData = await api('/api/reports/branch-wise');
+  const defData = await api('/api/reports/defaulters');
+  
+  if(branchData) {
+    const branches = ['CE','IT','ENTC','Mech','Civil'];
+    $('branch-report').innerHTML = branches.map(b => {
+      const d = branchData[b] || { percentage: 0 };
+      return `
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="font-weight:600;font-size:13px">${b}</span>
+            <span class="mono" style="font-size:12px">${d.percentage.toFixed(1)}%</span>
+          </div>
+          <div class="progress" style="height:8px">
+            <div class="progress-fill ${d.percentage>=75?'progress-green':'progress-red'}" style="width:${d.percentage}%"></div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+  
+  if(defData) {
+    $('def-count').textContent = defData.length;
+    if(!defData.length) {
+      $('def-table').innerHTML = `<tr><td colspan="3"><div style="text-align:center;padding:20px;color:var(--mid-gray)">No defaulters 🎉</div></td></tr>`;
+    } else {
+      $('def-table').innerHTML = defData.map(s => `
+        <tr>
+          <td><div style="font-weight:600">${s.first} ${s.last}</div></td>
+          <td class="mono">${s.roll}</td>
+          <td><span style="font-weight:700;color:var(--red)">${((s.present/s.total)*100).toFixed(1)}%</span></td>
+        </tr>
+      `).join('');
+    }
+  }
+}
+
+async function renderSumTable() {
+  const summary = await loadAttendanceSummary();
+  if(!summary) return;
+  
+  $('sum-table').innerHTML = students.filter(s=>s.status==='Approved').map(s => {
+    const d = summary[s.id] || { present: 0, total: 0, percentage: 0 };
+    return `
+      <tr>
+        <td class="mono">${s.roll}</td>
+        <td>${s.first} ${s.last}</td>
+        <td><span class="badge" style="background:var(--blue-ultra-light);color:var(--blue)">${s.branch}</span></td>
+        <td>${s.year}</td>
+        <td class="mono">${d.present}</td>
+        <td class="mono">${d.total}</td>
+        <td class="mono" style="font-weight:700;color:${d.percentage<75?'var(--red)':'var(--green)'}">${d.percentage.toFixed(1)}%</td>
+        <td><span class="chip ${d.percentage<75?'chip-red':'chip-green'}">${d.percentage<75?'At Risk':'On Track'}</span></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderAlerts() {
+  const alerts = [
+    { type: 'Pending Application', msg: 'New admission request from Sneha More.', date: 'Today' },
+    { type: 'Data Sync', msg: 'Cloud backup completed successfully.', date: '2 hours ago' },
+    { type: 'Attendance Audit', msg: '3 students fell below 75% threshold in the last week.', date: 'Yesterday' },
+    { type: 'Security', msg: 'Login detected from new device for account admin@ltcoe.edu.in', date: '2 days ago' }
+  ];
+  
+  $('alerts-list').innerHTML = alerts.map(a => `
+    <div style="padding:16px 20px;border-bottom:1px solid var(--lite-gray);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;margin-bottom:4px">${a.type}</div>
+        <div style="font-size:15px;font-weight:500">${a.msg}</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid-gray)">${a.date}</div>
+    </div>
+  `).join('');
+}
+
+function renderProfile() {
+  if(!currentUser) return;
+  $('profile-content').innerHTML = `
+    <div class="card" style="max-width:600px">
+      <div class="card-head"><div class="card-title">Account Details</div></div>
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px">
+          <div style="width:64px;height:64px;background:var(--blue);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">${currentUser.initials}</div>
+          <div>
+            <div style="font-size:18px;font-weight:700">${currentUser.name}</div>
+            <div style="color:var(--mid-gray)">${currentUser.role}</div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full"><label>Email Address</label><input type="text" value="${currentUser.email}" readonly></div>
+          <div class="form-group"><label>Account ID</label><input type="text" value="#${currentUser.id.toString().padStart(4,'0')}" readonly></div>
+          <div class="form-group"><label>Status</label><input type="text" value="Active" readonly></div>
+        </div>
+        <div style="margin-top:20px"><button class="btn btn-outline" style="color:var(--red)" onclick="logout()">Sign Out of All Devices</button></div>
+      </div>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════
+// MODALS & FORMS
+// ════════════════════════════════════════
+
+function openModal(id) {
+  const m = document.getElementById(id);
+  if(m) {
+    m.style.display = 'flex';
+    setTimeout(() => m.classList.add('active'), 10);
+  }
+}
+
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if(m) {
+    m.classList.remove('active');
+    setTimeout(() => m.style.display = 'none', 300);
+  }
+}
+
+async function submitModal() {
+  const data = {
+    first: $('f-first').value,
+    last:  $('f-last').value,
+    email: $('f-email').value,
+    phone: $('f-phone').value,
+    branch: $('f-branch').value,
+    year:   $('f-year').value,
+    dob:    $('f-dob').value,
+    gender: $('f-gender').value,
+    address: $('f-address').value,
+    school:  $('f-school').value,
+    score:   $('f-score').value
+  };
+
+  if(!data.first || !data.last || !data.email) return toast('Error','Name and Email are required','⚠️');
+
+  const res = await api('/api/students', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
+
+  if(res && res.ok) {
+    toast('Success','Application submitted successfully','✅');
+    closeModal('add-modal');
+    // Clear form
+    document.querySelectorAll('#add-modal input').forEach(i => i.value = '');
+    await loadStudents();
+    updateBadges();
+    goPanel('admissions');
+  } else {
+    toast('Error', res.error || 'Submission failed');
+  }
+}
+
+async function submitPanel() {
+  const data = {
+    first: $('profile-first').value,
+    last:  $('profile-last').value,
+    email: $('profile-email').value,
+    phone: $('profile-phone').value,
+    branch: $('profile-branch').value,
+    year:   $('profile-year').value,
+    dob:    $('profile-dob').value,
+    gender: $('profile-gender').value,
+    address: $('profile-address').value,
+    school:  $('profile-school').value,
+    score:   $('profile-score').value
+  };
+
+  if(!data.first || !data.last || !data.email) return toast('Error','Name and Email are required','⚠️');
+
+  const res = await api('/api/students', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  });
+
+  if(res && res.ok) {
+    toast('Success','Application submitted successfully','✅');
+    // Clear form
+    document.querySelectorAll('#panel-form input').forEach(i => i.value = '');
+    await loadStudents();
+    updateBadges();
+    goPanel('admissions');
+  } else {
+    toast('Error', res.error || 'Submission failed');
+  }
+}
+
+function exportCSV() {
+  if(!students.length) return toast('Error','No data to export','⚠️');
+  
+  let csv = 'Roll No,Name,Branch,Year,Email,Status\n';
+  students.forEach(s => {
+    csv += `${s.roll||""},${s.first} ${s.last},${s.branch},${s.year},${s.email},${s.status}\n`;
+  });
+  
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.setAttribute('hidden', '');
+  a.setAttribute('href', url);
+  a.setAttribute('download', 'ltcoe_student_report.csv');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  toast('Report Downloaded','CSV generated successfully','⬇️');
+}
+
+// ════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════
+const views = ['dashboard','admissions', 'students', 'attendance', 'addstudent', 'records', 'reports', 'alerts', 'profile'];
+function goPanel(v, el){
+  views.forEach(x=> {
+    const panel = $(`view-${x}`);
+    if(panel) panel.style.display='none';
+    if(panel) panel.classList.remove('active');
+  });
+  
+  const target = $(`view-${v}`);
+  if(target) {
+    target.style.display='block';
+    target.classList.add('active');
+  }
+  
+  // Update button active states
+  document.querySelectorAll('.tb-nav-item, .sb-item').forEach(e=>e.classList.remove('active'));
+  if(el) {
+    el.classList.add('active');
+  } else {
+    // If no el passed, try to find the button by its onclick
+    const btn = document.querySelector(`[onclick*="goPanel('${v}'"]`);
+    if(btn) btn.classList.add('active');
+  }
+  
+  if(v==='dashboard') updateDashboard();
+  if(v==='admissions') renderAdmissions();
+  if(v==='students') renderStudents();
+  if(v==='attendance') prepAttendance();
+  if(v==='records') renderRec();
+  if(v==='reports') { renderReports(); renderSumTable(); }
+  if(v==='alerts') renderAlerts();
+  if(v==='profile') renderProfile();
+  
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════
+// LOGIN / AUTH
+// ════════════════════════════════════════
+function setLoginRole(role, el){
+  loginRole=role;
+  document.querySelectorAll('.login-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  
+  let eml='',pwd='';
+  if(role==='admin'){ eml='admin@ltcoe.edu.in'; pwd='admin123';}
+  if(role==='faculty'){ eml='faculty@ltcoe.edu.in'; pwd='faculty123';}
+  if(role==='student'){ eml='student@ltcoe.edu.in'; pwd='student123';}
+  
+  $('login-email').value=eml;
+  $('login-pass').value=pwd;
+}
+
+async function doLogin(){
+  const e=$('login-email').value, p=$('login-pass').value;
+  
+  $('login-btn').textContent = 'Authenticating...';
+  
+  const res = await api('/api/login', {
+    method: 'POST',
+    body: JSON.stringify({email: e, password: p, role: loginRole})
+  });
+  
+  $('login-btn').textContent = 'Sign In to LTCOE Campus ➔';
+  
+  if(res && res.success) {
+    currentUser = res.user;
+    loginRole = res.user.role;
+    $('login-page').style.display='none';
+    $('app-shell').style.display='flex';
+    
+    // UI adjustments based on role
+    if(loginRole.toLowerCase() === 'student') {
+      document.querySelectorAll('.nav-adm, .nav-att, .req-admin').forEach(el => el.style.display = 'none');
+    }
+    
+    // Pre-fetch initial data
+    await loadStudents();
+    updateBadges();
+    goPanel('dashboard');
+    toast(`Welcome, ${currentUser.name}`,'Login successful','👋');
+  } else {
+    toast('Access Denied','Invalid credentials','❌');
+  }
+}
+
+function logout(){
+  currentUser=null;
+  $('app-shell').style.display='none';
+  $('login-page').style.display='flex';
+  toast('Logged out','See you safely','🔒');
+}
+
+// Ensure Enter key works for login
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+document.getElementById('login-email').addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+
+</script>
+</body>
+</html>
