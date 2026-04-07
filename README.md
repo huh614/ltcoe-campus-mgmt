@@ -1,6 +1,8 @@
 # LTCOE.int — Smart Campus Platform
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/huh614/ltcoe-campus-mgmt)
 
-Lokmanya Tilak College of Engineering's unified platform for **admissions**, **attendance tracking**, and **academic analytics** — backed by a real SQLite database.
+### 🚀 Direct Link 
+Click the **"Deploy to Render"** button above to get your permanent, live website URL!
 
 ---
 
